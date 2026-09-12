@@ -60,4 +60,4 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 
 ### Acknowledgments
 
-* BINF6200 Course Materials 
+* BINF6250 Course Materials 
