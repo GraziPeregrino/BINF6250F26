@@ -39,27 +39,15 @@ FUNCTION parse_line(line):
 FUNCTION read_file(file):
    counts ← {}
    OPEN file
-
-
-
    FOR each line IN file:
        IF line STARTS WITH "#":
            CONTINUE                   # header line
-
-
-
        diseases ← parse_line(line)
-
-
-
        FOR each d IN diseases:
            IF d IN counts:
                counts[d] ← counts[d] + 1
            ELSE:
                counts[d] ← 1
-
-
-
    RETURN counts
 ```
 # Successes
@@ -68,13 +56,34 @@ FUNCTION read_file(file):
 
 # Struggles
 Description of the stumbling blocks the team experienced
+- Preprocessing - the header filter used a membership test rather than a prefix test. 64 lines contain "#", only 28 start with one.
+- Rarity Comparison - which at first was written inverted, returning "[]" for rare variants. It ran without error and produced a dictionary.
 
 # Personal Reflections
 ## Group Leader
 Because I am not very familiar with GitHub, setting up the repository infrastructure was a bit of a struggle for me.  I had some difficulty understanding the workflow for creating the `project01_start` bookmark branch and the `project01_PR` branch. Also, due to some missteps during the branch creation and commit process, my branch ended up being 2 commits ahead of main instead. It took me some time to solve these problems, but it gave me a much clearer understanding of how commits and branching actually work in a collaborative environment.
 
 ## Other member
-Other members' reflections on the project
+Getting used to all the github branches and the synchronize process with the Group Leader project has its learning curve for sure. 
+`What I learned:` I learned how important is checking the repository state before commiting being a important step on the collaborating safety through GitHub.
+`Next Action:` As next steps will be keep using the Github and tool so it can be helping me to improve the knowledge on the github webpage. Also before any commit from the command line I would run the "git status" and "git log --oneline main..HEAD" which would help to confirm the branch state.
+
+Another reflection point are the skills that we need to develop of preprocessing and making sure we are accessing the correct data. It was observed that 64 lines contain "#" but only 28 start with one.
+What I learned: Before parsing a file, we need to examine the structure and confirm how headers, fields, and missing values are represented.
+`Next Action:` Getting used to start the prep processing as the first step while analyzing the data counting lines by prefix, checking key presence per record. 
+
+The last point I want to bring is the "Rarity threshold". The project requirements set a variant rare only when "AF_EXAC < 0.0001". If that comparison operation is added in a reversal form it would not represent the correct data output.
+`Evidence and Reasoning:` The inverted comparison on the rarity is a great reasoning point, since the wrong logic side would not get the correct value but would not display a specific error to be fixed. 
+`Next Action:` Test threshold-based conditions to confirm that only values strict below "0.0001" are classified as rare.
 
 # Generative AI Appendix
-As per the syllabus
+
+The appendix entry must contain:
+1. Description of which generative AI was used and its version.
+   Claude - Opus 5 
+2. The entire prompt that was used to generate the content.
+   Can you help me to fix my pseudocode to a latex format and the github?  
+3. An explanation of how it was used (e.g., to generate ideas).
+   It guided me on the correct format github friendly.
+4. A justification for why generative AI was used.
+   Once I paste the pseudocode on github it was not formatted.
