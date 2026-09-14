@@ -35,7 +35,25 @@ FUNCTION parse_line(line):
 
     RETURN result
 ```
+```
+FUNCTION read_file(file):
+    counts ← {}
+    OPEN file
 
+    FOR each line IN file:
+        IF line STARTS WITH "#":
+            CONTINUE                   # header line
+
+        diseases ← parse_line(line)
+
+        FOR each d IN diseases:
+            IF d IN counts:
+                counts[d] ← counts[d] + 1
+            ELSE:
+                counts[d] ← 1
+
+    RETURN counts
+```
 # Successes
 - Read line by line: The program uses a line-by-line reading method (`for line in f:`). This avoids loading the entire VCF file into memory with `readlines()`, allowing it to handle massive genomic datasets.
 - GitHub Collaboration: As a team, we managed the fork-and-pull-request workflow. Collaborators successfully forked the leader's repository and committed changes directly to their `project01_PR` branches. We then successfully opened pull requests and merged the collaborators' code into the project leader's repository after review.
