@@ -5,12 +5,55 @@ The project included the script `project01.py`,  and the program extracts specif
 
 
 # Pseudocode
-Put pseudocode in this box:
+
 
 ```
-Some pseudocode here
-```
+FUNCTION parse_line(line):
+    columns ← SPLIT(line, "\t")
+    pairs   ← SPLIT(columns[INFO], ";")
+    lookup  ← {}                       # empty dictionary
 
+    FOR each pair IN pairs:
+        key, value ← SPLIT_FIRST(pair, "=")
+        IF key is missing OR value is missing:
+            CONTINUE
+        lookup[key] ← value
+
+    IF "AF_EXAC" NOT IN lookup:
+        RETURN []
+
+    af ← TO_NUMBER(lookup["AF_EXAC"])
+    IF af ≥ 0.0001:
+        RETURN []
+
+    diseases ← SPLIT(lookup["CLNDN"], "|")
+    result   ← []
+
+    FOR each d IN diseases:
+        IF d ≠ "not_specified" AND d ≠ "not_provided":
+            APPEND d TO result
+
+    RETURN result
+```
+```
+FUNCTION read_file(file):
+    counts ← {}
+    OPEN file
+
+    FOR each line IN file:
+        IF line STARTS WITH "#":
+            CONTINUE                   # header line
+
+        diseases ← parse_line(line)
+
+        FOR each d IN diseases:
+            IF d IN counts:
+                counts[d] ← counts[d] + 1
+            ELSE:
+                counts[d] ← 1
+
+    RETURN counts
+```
 # Successes
 - Read line by line: The program uses a line-by-line reading method (`for line in f:`). This avoids loading the entire VCF file into memory with `readlines()`, allowing it to handle massive genomic datasets.
 - GitHub Collaboration: As a team, we managed the fork-and-pull-request workflow. Collaborators successfully forked the leader's repository and committed changes directly to their `project01_PR` branches. We then successfully opened pull requests and merged the collaborators' code into the project leader's repository after review.
