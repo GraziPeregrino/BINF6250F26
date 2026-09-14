@@ -1,6 +1,6 @@
 """
 BINF6250 Homework Assignment 1
-Author: Graziano Peregrino
+Author: Graziano Peregrino, Congyuan Liu
 """
 # !/usr/bin/env python
 from pprint import pprint
