@@ -5,43 +5,35 @@ The project included the script `project01.py`,  and the program extracts specif
 
 
 # Pseudocode
-FUNCTION parse_line(a line of text):
-    1. <SPLIT the line into the columns using tabs.>
-    2. <EXTRACT the INFO column and split it into semicolon-separated pairs.>
-    3. <CREATE an empty lookup dictionary.>
-    4. <FOR each pair in the INFO column:>
-            <SPLIT the pair at the first "=".>
-            <IF the pair does not contain both a key and a value:>
-                <CONTINUE to the next pair.>
-            <STORE the Key and Value in the lookup dictionary.>
-    5. <IF "AF_EXAC" is not in the lookup dictionary:>
-            <RETURN an empty list.>
-    6. <CONVERT the value of "AF_EXAC" to a number.>
-    7. <IF "AF_EXAC" is greater than or equal to 0.0001:>
-            <RETURN an empty list.>
-    8. <SPLIT the "CLNDN" value into disease names using "|".>
-    9. <CREATE an empty final disease list.>
-    10.<FOR each disease:>
-            <IF the disease is not "not_specified" and not "not_provided":>
-                <ADD the disease to the final disease list.> 
-    11. <RETURN the final disease list.>
 
-FUNCTION read_file(file):
-    1. <CREATE an empty counts dictionary.>
-    2. <OPEN the file.>
-    3. <FOR each line in the file:>
-            <IF the line begins with "#":>
-                <CONTINUE to the next line.>
-            <CALL parse_line(line) to obtain a list of rare-variant diseases.>
-            <FOR each disease in the returned list:>
-                <IF the disease already exists in the counts dictionary:>
-                    <INCREASE its count by 1.>
-                <ELSE:>
-                    <ADD the disease to the dictionary with a count of 1.>
-    4. <RETURN counts dictionary.>
 
 ```
-Some pseudocode here
+FUNCTION parse_line(line):
+    columns ← SPLIT(line, "\t")
+    pairs   ← SPLIT(columns[INFO], ";")
+    lookup  ← {}                       # empty dictionary
+
+    FOR each pair IN pairs:
+        key, value ← SPLIT_FIRST(pair, "=")
+        IF key is missing OR value is missing:
+            CONTINUE
+        lookup[key] ← value
+
+    IF "AF_EXAC" NOT IN lookup:
+        RETURN []
+
+    af ← TO_NUMBER(lookup["AF_EXAC"])
+    IF af ≥ 0.0001:
+        RETURN []
+
+    diseases ← SPLIT(lookup["CLNDN"], "|")
+    result   ← []
+
+    FOR each d IN diseases:
+        IF d ≠ "not_specified" AND d ≠ "not_provided":
+            APPEND d TO result
+
+    RETURN result
 ```
 
 # Successes
