@@ -53,7 +53,9 @@ FUNCTION read_file(file):
 # Successes
 - Read line by line: The program uses a line-by-line reading method (`for line in f:`). This avoids loading the entire VCF file into memory with `readlines()`, allowing it to handle massive genomic datasets.
 - GitHub Collaboration: As a team, we managed the fork-and-pull-request workflow. Collaborators successfully forked the leader's repository and committed changes directly to their `project01_PR` branches. We then successfully opened pull requests and merged the collaborators' code into the project leader's repository after review.
-
+- Dictionary-base lookups: Building a key-value dictionary for each line allows the program a lookup process that do not depend on where a key happens to sit. The INFO field can vary between records.
+- Robustness details: Using `split("=",1)` ensures that a value containing an additional equals sign "=" does not break the parsing process. The program also skips `INFO` entries that do not contain an equals sign, such as bare flags.
+  
 # Struggles
 Description of the stumbling blocks the team experienced
 - Preprocessing - the header filter used a membership test rather than a prefix test. 64 lines contain "#", only 28 start with one.
