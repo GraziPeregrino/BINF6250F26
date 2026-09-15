@@ -3,7 +3,6 @@ In this project, we are focused on parsing a Variant Call Format (VCF) file (`cl
 
 The project included the script `project01.py`,  and the program extracts specific value pairs from the `INFO` column to identify rare variants, which are defined as having an ExAC allele frequency (`AF_EXAC`) of less than 0.0001. For these rare variants, the code extracts the associated diseases from the `CLNDN` key, and excluding any entries marked as "not_specified" or "not_provided". Then,  it counts the number of times each disease occurs and outputs the results using the `pprint` module.
 
-
 # Pseudocode
 
 
